@@ -1,0 +1,2 @@
+import {publishableKey,configured,json,db} from '../lib/platform.js';
+export default async function handler(req,res){if(req.method!=='GET')return json(res,405,{error:'Method not allowed'});let ready=false;if(configured()){try{const sql=db();const rows=await sql`SELECT to_regclass('public.interview_bookings') IS NOT NULL AND to_regclass('public.interview_blocks') IS NOT NULL AS ready`;ready=rows[0]?.ready===true}catch{}}return json(res,200,{publishableKey:publishableKey(),ready,instructor:'Sai Kushal Chowdary',timezone:'Asia/Kolkata',duration:30})}
